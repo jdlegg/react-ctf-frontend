@@ -5,6 +5,8 @@ import Logout from './components/authentication/logout';
 import Prote from './components/protected';
 import Navbar from './components/Navbar';
 import Score from './components/scoring/Score';
+import Challenge1 from './components/challenges/challenge1';
+import Register from './components/scoring/Register';
 import { AppContext } from './context';
 import { useEffect, useState } from 'react';
 
@@ -29,6 +31,8 @@ function App() {
           <Route exact path={"/signup/"} component={Signup}/>
           <Route exact path='/logout' render={(props) => (<Logout {...props} setIsAuth={setIsAuth} isAuth={isAuth} /> )} />
           <Route exact path="/protected" render={(props) => (<Prote {...props} setIsAuth={setIsAuth} isAuth={isAuth} /> )} />
+          <Route exact path="/challenge1" render={(props) => (<Challenge1 {...props} setIsAuth={setIsAuth} isAuth={isAuth} /> )} />
+          <Route exact path="/register" render={(props) => (<Register {...props} setIsAuth={setIsAuth} isAuth={isAuth} /> )} />
           <Route exact path="/:name" render={(props) => (<Score {...props} setIsAuth={setIsAuth} isAuth={isAuth} /> )} />
         </Switch>
       </div>

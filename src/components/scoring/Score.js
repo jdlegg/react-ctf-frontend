@@ -1,26 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Redirect } from 'react-router';
 import { multi_score } from "../../api/scoring/scoringAPI";
 import { useParams } from "react-router";
+import { prot } from "../../api/authentication/authAPI";
 
 const Score = (props) => {
-    
+    console.log("Score Component")
     const { name } = useParams();
 
-    const [prote, setProte] = useState();
-    //console.log("Debug insdie Score in components/scoring/Highscore")
-    multi_score(name).then((response) => { 
-        //console.log("Debug Prote: ",response)
-        if(response === false) {
-            //console.log("Inside Prote false");
-            //console.log("isAuth: ", props.isAuth)
+    const [prote, setProte] = useState([]);
+
+    useEffect( () => {
+        multi_score(name).then((response) => {
+        if(response===false) {
             props.setIsAuth(false);
-            //console.log("After set - isAuth: ", props.isAuth)
             return <Redirect to = "/login/"/>
-        } else { setProte(response)} })
+        } else {setProte(response)}
+    }, [name])})
 
     return(
-        <div>Protected
+        <div>Scoring
             <p>
                 Output:
             </p>

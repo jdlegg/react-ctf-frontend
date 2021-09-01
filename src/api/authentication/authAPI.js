@@ -45,6 +45,7 @@ export const logout = async () => {
 };
 
 export const refreshToken = async () => {
+    console.log("RefreshToken")
     let dataAccess = getAccessToken();
     let dataRefresh = getRefreshToken();
 
