@@ -22,7 +22,7 @@ const Register = () => {
         clearState(); // clears the current error messages if they exist
         e.preventDefault();
         const challenge = {
-            points: 0,
+            flags:[]
             }
         register(challenge)
             .then( async (response) => { 

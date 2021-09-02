@@ -87,3 +87,32 @@ export const register = async (user) => {
     })
     return response
 };
+
+export const checkChallenge = async (name) => {
+    let dataAccess = getAccessToken();
+    //console.log("Debug prot: ",dataAccess)
+    if (dataAccess === false) {
+        return false;
+    } 
+
+    if (!isTokenExpired(dataAccess)) {
+        refreshToken().then((response) => {
+            if(response === false) {
+                return <Redirect to="/login" />
+            } else {
+                dataAccess = getAccessToken();
+            }
+        })
+    }
+
+    //console.log("Debug insdie Highscore in scoringAPI/Highscore")
+
+    const response = await fetch(('http://127.0.0.1:8000/scoring/verify/'+name) , {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': "JWT " + dataAccess,
+    },
+    method: 'GET'
+  })
+  return response
+};

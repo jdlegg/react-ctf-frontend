@@ -3,6 +3,7 @@ import { Redirect } from 'react-router';
 
 export const createUser = async (newUser) => {
   const response = await fetch('http://127.0.0.1:8000/api/user/create/', {
+  //const response = await fetch('https://young-shore-38212.herokuapp.com/api/user/create/', {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -14,6 +15,7 @@ export const createUser = async (newUser) => {
 
 export const loginUser = async (userCred) => {
     const response = await fetch('http://127.0.0.1:8000/api/token/obtain/', {
+    //const response = await fetch('https://young-shore-38212.herokuapp.com/api/token/obtain/', {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -33,6 +35,7 @@ export const logout = async () => {
 
     console.log(dataRefresh)
     const response = await fetch('http://127.0.0.1:8000/api/blacklist/', {
+    //const response = await fetch('https://young-shore-38212.herokuapp.com/api/blacklist/', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -54,6 +57,7 @@ export const refreshToken = async () => {
     }
 
     const response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
+    //const response = await fetch('https://young-shore-38212.herokuapp.com/api/token/refresh/', {  
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -88,6 +92,7 @@ export const prot = async () => {
     }
 
     const response = await fetch('http://127.0.0.1:8000/api/hello/', {
+    //const response = await fetch('https://young-shore-38212.herokuapp.com/api/hello/', {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
