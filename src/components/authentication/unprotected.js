@@ -12,7 +12,7 @@ const Unprotected = () => {
 
     return(
         <div>
-            <p>Weclome to the Worst CTF</p>
+            <p>Weclome to CTF v0.1</p>
             <p>The test pull of unportected data: {unprotected_value}</p>
         </div>
     )
