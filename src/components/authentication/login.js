@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { loginUser } from '../../api/authentication/authAPI';
 import { Redirect } from 'react-router';
+import Individualscore from "../scoring/Individualscore";
 
 const Login = (props) => {
-
     const [username, setUsername] = useState('') // username to create credentials
     const [password, setPassword] = useState('') // password to create credentials
     const [redirect, setRedirect] = useState(false) // handler to redirect if authenticated
@@ -40,30 +40,32 @@ const Login = (props) => {
                     localStorage.setItem('access_token', token.access);
                     localStorage.setItem('refresh_token', token.refresh);
                     props.setIsAuth(true);
+                    props.setScore(<Individualscore/>)
                     setRedirect(true);
                 }})
     }
 
     if (redirect) {
-        return <Redirect to = "/protected"/> // move here if redirected
+        return <Redirect to = "/challenges"/> // move here if redirected
     }
 
     return(
-        <div>Login
+        <div>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Username:
-                    <input name="username" type="text" value={username} onChange={handleChange}/>
+                    Username: &nbsp;
+                    <input name="username" type="text" value={username} onChange={handleChange} style={{width: "120px", height: "30px" }}/>
+                    &nbsp;
                 </label>
                 <label>
-                    Password:
-                    <input name="password" type="password" value={password} onChange={handleChange}/>
+                    Password: &nbsp;
+                    <input name="password" type="password" value={password} onChange={handleChange} style={{width: "120px", height: "30px" }}/>
+                    &nbsp;
                 </label>
-                <input type="submit" value="Submit"/>
-                { errorMessage && <h3 className="error"> {errorMessage} </h3>}
+                <input type="submit" value="Login"/>
+                { errorMessage && <p className="error" style={{color: '#000000', fontWeight: 'Bold', }}> {errorMessage} </p>}
             </form>
         </div>
     )
 }
-
 export default Login;

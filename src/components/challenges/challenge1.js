@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react";
 import { scoreFlag } from "../../api/scoring/scoringAPI";
 import { checkChallenge } from "../../api/scoring/scoringAPI";
+import { Button} from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
 
 const Challenge1 = () => {
 
     const [flag, setFlag] = useState('')
-    const [errorMessage, setErrorMessage] = useState([]) // handler for error message
+    const [errorMessage, setErrorMessage] = useState([])
     const [solved, setSolved] = useState(false)
 
-    // Functions to reset the errorMessages back to none
+    const history = useHistory();
+
     const clearState = () => {
         setErrorMessage([])
     }
@@ -29,7 +32,7 @@ const Challenge1 = () => {
     }, [])
 
     const handleSubmit = (e) => {
-        clearState(); // clears the current error messages if they exist
+        clearState(); 
         e.preventDefault();
         const newFlag = {
             name: "WebApp1",
@@ -50,22 +53,22 @@ const Challenge1 = () => {
                             setSolved(false)
                         } 
                         else { 
-                            setSolved(true) 
+                            setSolved(true)
                         }
                     })
-                    }
+                }
             }
         )
     }
     
     return(
-        <div>Challenge 1 Submission
+        <div>Challenge 1
             <p hidden>FLAG: test</p>
             <form onSubmit={handleSubmit}>
                 <label>
                     {(solved) ? (<div>Solved!</div>) : (<p>Flag: <input name="flag" type="text" value={flag} onChange={handleChange}/> </p>)}       
                 </label>
-                <input type="submit" value="Submit"/>
+                {(solved) ? (<p><Button onClick={()=> history.push('/challenges')} variant="primary">Return</Button></p>) : (<input type="submit" value="Submit"/>)}
                 { errorMessage && <ul className="error"> {errorMessage.map((item) => (<li>{item}</li>))} </ul>}
             </form>
         </div>

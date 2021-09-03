@@ -20,7 +20,7 @@ const Logout = (props) => {
     } else {
         handleLogout()
         props.setIsAuth(false)
-        return <Redirect to = "/login"/>
+        return <Redirect to = "/"/>
     }
 }
 
