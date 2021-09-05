@@ -2,6 +2,7 @@ import { useState } from "react";
 import { loginUser } from '../../api/authentication/authAPI';
 import { Redirect } from 'react-router';
 import Individualscore from "../scoring/Individualscore";
+import { Form, Button, Row, Col } from "react-bootstrap";
 
 const Login = (props) => {
     const [username, setUsername] = useState('') // username to create credentials
@@ -9,12 +10,18 @@ const Login = (props) => {
     const [redirect, setRedirect] = useState(false) // handler to redirect if authenticated
     const [errorMessage, setErrorMessage] = useState('') // handler for error message
     
+    const clearState = () => {
+        setErrorMessage([])
+    }
+
     // store credentials into state
     const handleChange = (e) => {
         if (e.target.name === 'username') {
             setUsername(e.target.value)
+            clearState()
         } else if (e.target.name === 'password') {
             setPassword(e.target.value)
+            clearState()
         }
     }
 
@@ -50,22 +57,20 @@ const Login = (props) => {
     }
 
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Username: &nbsp;
-                    <input name="username" type="text" value={username} onChange={handleChange} style={{width: "120px", height: "30px" }}/>
-                    &nbsp;
-                </label>
-                <label>
-                    Password: &nbsp;
-                    <input name="password" type="password" value={password} onChange={handleChange} style={{width: "120px", height: "30px" }}/>
-                    &nbsp;
-                </label>
-                <input type="submit" value="Login"/>
-                { errorMessage && <p className="error" style={{color: '#000000', fontWeight: 'Bold', }}> {errorMessage} </p>}
-            </form>
-        </div>
+        <Form onSubmit={handleSubmit}>
+            <Row className="mx-auto" style={{width: "100%"}}>
+                <Form.Group as={Col} controlId="formGridUsername">
+                    <Form.Control inline name="username" type="text" placeholder="Enter username" value={username} onChange={handleChange} />
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridPassword">
+                    <Form.Control inline name="password" type="password" placeholder="Enter password" value={password} onChange={handleChange} />
+                </Form.Group>
+                <Form.Group as={Col} controlId="formGridSubmit">
+                    <Button variant="primary" type="submit">Login</Button>
+                </Form.Group>
+            </Row>       
+            {errorMessage && <div className="text-white">{errorMessage}</div>}
+        </Form>
     )
 }
 export default Login;

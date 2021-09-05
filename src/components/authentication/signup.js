@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { createUser } from "../../api/authentication/authAPI";
 import { Redirect } from 'react-router'
+import { ListGroup, ListGroupItem } from 'react-bootstrap'
 
 const Signup = () => {
     const [username, setUsername] = useState('')
@@ -74,7 +75,7 @@ const Signup = () => {
                     <input name="email" type="email" value={email} onChange={handleChange}/>
                 </label>
                 <input type="submit" value="Submit"/>
-                { errorMessage && <ul className="error"> {errorMessage.map((item) => (<li>{item}</li>))} </ul>}
+                { errorMessage && <ListGroup variant="flush" className="error"> {errorMessage.map((item) => (<ListGroupItem>{item}</ListGroupItem>))} </ListGroup>}
             </form>
         </div>
     )

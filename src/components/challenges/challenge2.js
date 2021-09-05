@@ -5,7 +5,7 @@ import { Button} from "react-bootstrap";
 import { useHistory } from 'react-router-dom';
 import Individualscore from "../scoring/Individualscore";
 
-const Challenge1 = (props) => {
+const Challenge2 = (props) => {
 
     const [flag, setFlag] = useState('')
     const [errorMessage, setErrorMessage] = useState([])
@@ -24,7 +24,7 @@ const Challenge1 = (props) => {
     }
 
     useEffect( () => {
-        checkChallenge('WebApp1').then( async (response) => {
+        checkChallenge('WebApp2').then( async (response) => {
             if (response.status > 201) {
                 setSolved(false)
                 }
@@ -36,20 +36,20 @@ const Challenge1 = (props) => {
         clearState(); 
         e.preventDefault();
         const newFlag = {
-            name: "WebApp1",
+            name: "WebApp2",
             flag: flag,
         }
         scoreFlag(newFlag)
             .then( async (response) => { 
-                console.log("insdie scoreFlag")
+                //console.log("insdie scoreFlag")
                 if (response.status > 201) {
-                    console.log("inside Response > 200 Scoring")
+                    //console.log("inside Response > 200 Scoring")
                     let error = await response.json()
                     if (error.flag) {
                         setErrorMessage( arr => [...arr, "Flag Error: " + error.flag[0]])
                     }
                 } else { 
-                    checkChallenge('WebApp1').then( async (response) => {
+                    checkChallenge('WebApp2').then( async (response) => {
                         if (response.status > 201) {
                             setSolved(false)
                         } 
@@ -64,11 +64,10 @@ const Challenge1 = (props) => {
     }
     
     return(
-        <div>Challenge 1
-            <p hidden>FLAG: test</p>
+        <div>Challenge 2
             <form onSubmit={handleSubmit}>
                 <label>
-                    {(solved) ? (<div>Solved!</div>) : (<p>Flag: <input name="flag" type="text" value={flag} onChange={handleChange}/> </p>)}       
+                    {(solved) ? (<div>Solved!</div>) : (<p>Flag: <input name="flag" type="text" value={flag} onChange={handleChange} content="FLAG: test2"/> </p>)}       
                 </label>
                 {(solved) ? (<p><Button onClick={()=> history.push('/challenges')} variant="primary">Return</Button></p>) : (<input type="submit" value="Submit"/>)}
                 { errorMessage && <ul className="error"> {errorMessage.map((item) => (<li>{item}</li>))} </ul>}
@@ -76,4 +75,4 @@ const Challenge1 = (props) => {
         </div>
     )
 }
-export default Challenge1;
+export default Challenge2;

@@ -2,9 +2,11 @@ import { getAccessToken, isTokenExpired } from "../authentication/authHelper";
 import { Redirect } from 'react-router';
 import { refreshToken } from "../authentication/authAPI";
 
+//const baseUrl = 'http://127.0.0.1:8000';
+const baseUrl = 'https://boiling-thicket-74024.herokuapp.com';
+
 export const high_score = async () => {
     let dataAccess = getAccessToken();
-    //console.log("Debug prot: ",dataAccess)
     if (dataAccess === false) {
         return false;
     } 
@@ -19,10 +21,7 @@ export const high_score = async () => {
         })
     }
 
-    //console.log("Debug insdie Highscore in scoringAPI/Highscore")
-
-    //const response = await fetch(('http://127.0.0.1:8000/scoring/highscore') , {
-    const response = await fetch(('https://boiling-thicket-74024.herokuapp.com/scoring/highscore') , {
+    const response = await fetch(`${baseUrl}/scoring/highscore`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -34,7 +33,6 @@ export const high_score = async () => {
 
 export const ind_score = async () => {
     let dataAccess = getAccessToken();
-    //console.log("Debug prot: ",dataAccess)
     if (dataAccess === false) {
         return false;
     } 
@@ -49,10 +47,7 @@ export const ind_score = async () => {
         })
     }
 
-    //console.log("Debug insdie Highscore in scoringAPI/Highscore")
-
-    //const response = await fetch(('http://127.0.0.1:8000/scoring/ind_score/') , {
-    const response = await fetch(('https://boiling-thicket-74024.herokuapp.com/scoring/ind_score') , {
+    const response = await fetch(`${baseUrl}/scoring/ind_score/`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -63,9 +58,7 @@ export const ind_score = async () => {
 };
 
 export const scoreFlag = async (newFlag) => {
-
     let dataAccess = getAccessToken();
-    //console.log("Debug prot: ",dataAccess)
     if (dataAccess === false) {
         return false;
     } 
@@ -79,9 +72,7 @@ export const scoreFlag = async (newFlag) => {
             }
         })
     }
-
-    //const response = await fetch('http://127.0.0.1:8000/scoring/score_flag/', {
-    const response = await fetch('https://boiling-thicket-74024.herokuapp.com/scoring/score_flag/', {
+    const response = await fetch(`${baseUrl}/scoring/score_flag/`, {
         headers: {
         'Content-Type': 'application/json',
         'Authorization': "JWT " + dataAccess,
@@ -89,8 +80,6 @@ export const scoreFlag = async (newFlag) => {
         method: 'POST',
         body: JSON.stringify(newFlag)
     })
-    // const body = await response.json()
-    // console.log("DEBUG API: ", JSON.stringify(body))
     return response.text()
 };
 
@@ -111,8 +100,7 @@ export const register = async (user) => {
         })
     }
 
-    //const response = await fetch('http://127.0.0.1:8000/scoring/', {
-    const response = await fetch('https://boiling-thicket-74024.herokuapp.com/scoring/', {
+    const response = await fetch(`${baseUrl}/scoring/`, {
         headers: {
         'Content-Type': 'application/json',
         'Authorization': "JWT " + dataAccess,
@@ -125,7 +113,7 @@ export const register = async (user) => {
 
 export const checkChallenge = async (name) => {
     let dataAccess = getAccessToken();
-    //console.log("Debug prot: ",dataAccess)
+
     if (dataAccess === false) {
         return false;
     } 
@@ -140,10 +128,7 @@ export const checkChallenge = async (name) => {
         })
     }
 
-    //console.log("Debug insdie Highscore in scoringAPI/Highscore")
-
-    //const response = await fetch(('http://127.0.0.1:8000/scoring/verify/'+name) , {
-    const response = await fetch(('https://boiling-thicket-74024.herokuapp.com/scoring/verify/'+name) , {
+    const response = await fetch(`${baseUrl}/scoring/verify/`+name, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -151,4 +136,29 @@ export const checkChallenge = async (name) => {
     method: 'GET'
   })
   return response
+};
+
+export const checkRegister = async (name) => {
+    let dataAccess = getAccessToken();
+    if (dataAccess === false) {
+        return false;
+    } 
+    if (!isTokenExpired(dataAccess)) {
+        refreshToken().then((response) => {
+            if(response === false) {
+                return <Redirect to="/" />
+            } else {
+                dataAccess = getAccessToken();
+            }
+        })
+    }
+    const response = await fetch(`${baseUrl}/scoring/checkregister`, {
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': "JWT " + dataAccess,
+    },
+    method: 'GET'
+  })
+  const resp = await response.json()
+  return resp[0]
 };

@@ -1,9 +1,11 @@
 import { getAccessToken, getRefreshToken, isTokenExpired } from "./authHelper";
 import { Redirect } from 'react-router';
 
+//const baseUrl = 'http://127.0.0.1:8000';
+const baseUrl = 'https://boiling-thicket-74024.herokuapp.com';
+
 export const createUser = async (newUser) => {
-  //const response = await fetch('http://127.0.0.1:8000/api/user/create/', {
-  const response = await fetch('https://boiling-thicket-74024.herokuapp.com/api/user/create/', {
+  const response = await fetch(`${baseUrl}/api/user/create/`, {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -14,8 +16,7 @@ export const createUser = async (newUser) => {
 };
 
 export const loginUser = async (userCred) => {
-    //const response = await fetch('http://127.0.0.1:8000/api/token/obtain/', {
-    const response = await fetch('https://boiling-thicket-74024.herokuapp.com/api/token/obtain/', {
+    const response = await fetch(`${baseUrl}/api/token/obtain/`, {
     headers: {
       'Content-Type': 'application/json'
     },
@@ -34,8 +35,7 @@ export const logout = async () => {
     }
 
     console.log(dataRefresh)
-    //const response = await fetch('http://127.0.0.1:8000/api/blacklist/', {
-    const response = await fetch('https://boiling-thicket-74024.herokuapp.com/api/blacklist/', {
+    const response = await fetch(`${baseUrl}/api/blacklist/`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -48,7 +48,6 @@ export const logout = async () => {
 };
 
 export const refreshToken = async () => {
-    console.log("RefreshToken")
     let dataAccess = getAccessToken();
     let dataRefresh = getRefreshToken();
 
@@ -56,8 +55,7 @@ export const refreshToken = async () => {
         return false;
     }
 
-    //const response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
-    const response = await fetch('https://boiling-thicket-74024.herokuapp.com/api/token/refresh/', {  
+    const response = await fetch(`${baseUrl}/api/token/refresh/`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -74,9 +72,9 @@ export const refreshToken = async () => {
   return response.data
 };
 
+
 export const prot = async () => {
     let dataAccess = getAccessToken();
-    //console.log("Debug prot: ",dataAccess)
     if (dataAccess === false) {
         return false;
     } 
@@ -90,9 +88,7 @@ export const prot = async () => {
             }
         })
     }
-
-    //const response = await fetch('http://127.0.0.1:8000/api/hello/', {
-    const response = await fetch('https://boiling-thicket-74024.herokuapp.com/api/hello/', {
+    const response = await fetch(`${baseUrl}/api/hello/`, {
     headers: {
       'Content-Type': 'application/json',
       'Authorization': "JWT " + dataAccess,
@@ -103,9 +99,7 @@ export const prot = async () => {
 };
 
 export const unprotected = async () => {
-
-    //const response = await fetch('http://127.0.0.1:8000/api/unprotected/', {
-    const response = await fetch('https://boiling-thicket-74024.herokuapp.com/api/unprotected/', {
+    const response = await fetch(`${baseUrl}/api/unprotected/`, {
     headers: {
       'Content-Type': 'application/json',
     },

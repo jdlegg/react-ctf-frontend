@@ -1,43 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import {Link} from 'react-router-dom';
 import Login from '../authentication/login';
-import { 
-  Nav,
-  NavLink,
-  Bars,
-  NavMenu,
-  NavBtn,
-  NavBtnLink,
-  NavDisplay,
-  NavLogin,
-} from './NavbarElements';
+import { AppContext } from '../../context';
+import Logout from '../authentication/logout';
+import { Navbar, Nav, Container } from 'react-bootstrap';
   
-const Navbar = (props) => {
+const BootstrapNavbar = (props) => {
+    const { score } = useContext(AppContext);
+
     return (
-        <>
-        <Nav>
-            <Bars />
-            <NavMenu>
-                {/* <NavLink to='/unprotected' activeStyle> Unprotected </NavLink> */}
-                {(!props.isAuth) && (<NavLink to='/signup' activeStyle> Signup </NavLink>)}
-                {/* {(props.isAuth) && (<NavLink to='/protected' activeStyle>Protected View inside Auth </NavLink>)} */}
-                {(props.isAuth) && (<NavLink to='/highscore' activeStyle>High Score </NavLink>)}
-                {/* {(props.isAuth) && (<NavLink to='/ind_score' activeStyle>Individual Score </NavLink>)} */}
-                {(props.isAuth) && (<NavLink to='/challenges' activeStyle>Challenges </NavLink>)}
-                {(props.isAuth) && (<NavLink to='/register' activeStyle>Register Challenge </NavLink>)}
-                {/* Second Nav */}
-                {/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
-                
-            </NavMenu>
-            <NavMenu>
-                <NavBtn>
-                    {(props.isAuth) && (<NavDisplay>Score: {props.score}</NavDisplay>)}
-                    {/* {(props.isAuth) ? (<NavBtnLink to='/logout'>Logout</NavBtnLink>) : (<NavBtnLink to='/login'>Login</NavBtnLink>)} */}
-                    {(props.isAuth) ? (<NavBtnLink to='/logout'>Logout</NavBtnLink>) : (<NavLogin><Login setScore={props.setScore} setIsAuth={props.setIsAuth}/></NavLogin>)}
-                </NavBtn>
-            </NavMenu>
-        </Nav>
-        </>
+        <div>
+        <div className="row">
+        <div className="col-md-12">
+        <Navbar bg="dark" variant="dark" expand="lg" stick="top" collapseOnSelect>
+        <Navbar.Toggle aria-controls='responsive-navbar-nav'/>
+        <Navbar.Collapse id='responsive-navbar-nav'>
+            <Nav className="mr-auto">
+                <Nav.Link as={Link} to="/">Home</Nav.Link>
+                {(!props.isAuth) && (<Nav.Link as={Link} to='/signup'>Signup</Nav.Link>)}
+                {(props.isAuth) && (<Nav.Link as={Link} to='/highscore'>High Score</Nav.Link>)}
+                {(props.isAuth) && (<Nav.Link as={Link} to='/challenges'>Challenges</Nav.Link>)}
+            </Nav>
+            <Container className="justify-content-end" style={{width:"70%"}}>
+            {(props.isAuth) && (<Navbar.Text>Score:</Navbar.Text>)}
+            {(props.isAuth) && (<Navbar.Text className="py-2 px-md-3">{score}</Navbar.Text>)}
+            {(props.isAuth) ? (<Nav> <Logout setIsAuth={props.setIsAuth}/></Nav>) : (<Nav className="justify-content-end" style={{width:"100%"}}><Login setScore={props.setScore} setIsAuth={props.setIsAuth}/></Nav>)}
+            </Container>
+        </Navbar.Collapse>
+        </Navbar>
+        </div>
+        </div>
+        </div>
   );
 };
   
-export default Navbar;
+export default BootstrapNavbar;
