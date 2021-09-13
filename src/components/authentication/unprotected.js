@@ -13,8 +13,9 @@ const Unprotected = () => {
     return(
         <div>
             <p>Weclome to CTF v0.1</p>
-            <p>The test pull of unportected data: {unprotected_value}</p>
         </div>
     )
 }
 export default Unprotected
+
+//<p>The test pull of unportected data: {unprotected_value}</p>
